@@ -10,7 +10,7 @@ contract BigMint{
         uint32 public NFTcount=0;
         bool public isPaused=false;
         event mintSuccessful(uint256, uint32);
-    mapping (uint256 => bool) public TokenIds;
+    mapping (uint256 => uint32) public TokenIds;
     mapping (uint32 =>uint256) public BagIds;
    constructor() public payable {
      owner = msg.sender;
@@ -18,7 +18,7 @@ contract BigMint{
      for (uint i=0; i<35; i++) {
            NFTcount++;
       BagIds[NFTcount]=protonID;
-      TokenIds[protonID]=true;
+      TokenIds[protonID]=NFTcount;
       protonID++;
         }
      
@@ -31,7 +31,7 @@ contract BigMint{
      NFTcount++;
       tokenId=minter.createProtonForSale(owner,msg.sender,string(abi.encodePacked('https://ipfs.io/ipfs/QmaVP2ka3cH3fvoRTZXoimQJu4DEpmZqmpnaLEk3wC22Dr/', uint2str(NFTcount), '.json'))
     ,0,300,0);
-    TokenIds[tokenId]=true;
+    TokenIds[tokenId]=NFTcount;
     BagIds[NFTcount]=tokenId;
      emit mintSuccessful(tokenId,NFTcount);
     return tokenId;
